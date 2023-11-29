@@ -126,7 +126,6 @@ socialMedia.belongsTo(user, { foreignKey: "UserId" });
 const syncModels = async () => {
   try {
     await sequelize.sync();
-    console.log("Model created");
   } catch (error) {
     console.error("Something happen with model :", error);
   }
