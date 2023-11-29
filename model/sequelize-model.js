@@ -123,11 +123,13 @@ comment.belongsTo(photo, { foreignKey: "PhotoId" });
 
 socialMedia.belongsTo(user, { foreignKey: "UserId" });
 
-sequelize
-  .sync()
-  .then(() => {
+const syncModels = async () => {
+  try {
+    await sequelize.sync();
     console.log("Model created");
-  })
-  .catch((error) => {
+  } catch (error) {
     console.error("Something happen with model :", error);
-  });
+  }
+};
+
+syncModels();
