@@ -18,6 +18,6 @@ web.use(publicRouter);
 web.use(userRouter);
 web.use(errorMiddleware);
 
-web.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+// web.listen(port, () => {
+//   console.log(`Server listening on port ${port}`);
+// });
