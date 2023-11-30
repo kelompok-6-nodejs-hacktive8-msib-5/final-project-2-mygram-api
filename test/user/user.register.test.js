@@ -1,15 +1,12 @@
 import supertest from "supertest";
-import { web } from "../index.js";
-import { removeTestUser } from "./test-util.js";
+import { web } from "../../index.js";
+import { removeTestUser } from "../test-utils/test-util.js";
 
 describe("POST /users/register", () => {
-  let token;
-
   afterAll(async () => {
     await removeTestUser();
   });
 
-  //users/register
   it("should email not valid", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendogmailcom",
@@ -42,13 +39,63 @@ describe("POST /users/register", () => {
     expect(result.body.error).toBe("full name must be at least 3 characters");
   });
 
+  it("should username required", async () => {
+    const result = await supertest(web).post("/users/register").send({
+      email: "rohendo@gmail.com",
+      full_name: "rohendo j",
+      username: "",
+      password: "tes123123",
+      profile_image_url: "https://example.com/default-profile-image.jpg",
+      age: 20,
+      phone_number: 6281568218155,
+    });
+
+    expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBe("username at least 1 character long");
+  });
+
+  it("should password cannot be empty", async () => {
+    const result = await supertest(web).post("/users/register").send({
+      email: "rohendo@gmail.com",
+      full_name: "rohendo j",
+      username: "rohendo",
+      password: "",
+      profile_image_url: "https://example.com/default-profile-image.jpg",
+      age: 20,
+      phone_number: 6281568218155,
+    });
+
+    expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBe("password at least 6 character long");
+  });
+
+  it("should profile image url required", async () => {
+    const result = await supertest(web).post("/users/register").send({
+      email: "rohendo@gmail.com",
+      full_name: "rohendo j",
+      username: "rohendo",
+      password: "tes123123",
+      profile_image_url: "",
+      age: 20,
+      phone_number: 6281568218155,
+    });
+
+    expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBe(
+      "profile_image_url at least 1 character long"
+    );
+  });
+
   it("should profile_image_url not valid", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendo@gmail.com",
       full_name: "rohendo j",
       username: "rohendo",
       password: "tes123123",
-      profile_image_url: "httpsexample.comdefault-profile-imagejpg",
+      profile_image_url: "httpexample.comdefault-profile-imagejpg",
       age: 20,
       phone_number: 6281568218155,
     });
@@ -90,7 +137,7 @@ describe("POST /users/register", () => {
     expect(result.body.error).toBe("phone_number must be number");
   });
 
-  it("shoud success register", async () => {
+  it("should success register", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendo@gmail.com",
       full_name: "Rohendo Junaedin",
@@ -125,63 +172,5 @@ describe("POST /users/register", () => {
     expect(result.status).toBe(409);
     expect(result.body).toHaveProperty("error");
     expect(result.body.error).toBe("Email or Username already use");
-  });
-
-  //users/login
-  it("should email not valid", async () => {
-    const result = await supertest(web).post("/users/login").send({
-      email: "rohendmailcom",
-      password: "tes123123",
-    });
-
-    expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty("error");
-    expect(result.body.error).toBe("email not valid");
-  });
-
-  it("should password cannot empty", async () => {
-    const result = await supertest(web).post("/users/login").send({
-      email: "rohendo@gmail.com",
-      password: "",
-    });
-
-    expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty("error");
-    expect(result.body.error).toBe("password cannot be empty");
-  });
-
-  it("should wrong email", async () => {
-    const result = await supertest(web).post("/users/login").send({
-      email: "rohendo2@gmail.com",
-      password: "tes123123",
-    });
-
-    expect(result.status).toBe(401);
-    expect(result.body).toHaveProperty("error");
-    expect(result.body.error).toBe("Email or password wrong");
-  });
-
-  it("should wrong password", async () => {
-    const result = await supertest(web).post("/users/login").send({
-      email: "rohendo2@gmail.com",
-      password: "tes",
-    });
-
-    expect(result.status).toBe(401);
-    expect(result.body).toHaveProperty("error");
-    expect(result.body.error).toBe("Email or password wrong");
-  });
-
-  it("should success login", async () => {
-    const result = await supertest(web).post("/users/login").send({
-      email: "rohendo@gmail.com",
-      password: "tes123123",
-    });
-
-    expect(result.status).toBe(200);
-    expect(result.body).toHaveProperty("token");
-    expect(result.body.token).toBeDefined();
-
-    token = result.body.token;
   });
 });
