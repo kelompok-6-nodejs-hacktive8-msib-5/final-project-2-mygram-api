@@ -60,7 +60,7 @@ export const login = async (request) => {
   });
 
   if (!existingEmailUser) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
   const {
@@ -72,7 +72,7 @@ export const login = async (request) => {
   const isPasswordValid = await bcrypt.compare(password, passwordUser);
 
   if (!isPasswordValid) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
   const token = generateToken(idUser, emailUser);

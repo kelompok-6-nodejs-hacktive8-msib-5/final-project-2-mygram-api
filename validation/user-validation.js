@@ -7,6 +7,7 @@ export const registerUserValidation = z.object({
     .max(100, { message: "email should not be longer than 100 characters" }),
   full_name: z
     .string({ required_error: "full_name is required" })
+    .min(3, { message: "full name must be at least 3 characters" })
     .max(100, { message: "fullname should not be longer than 100 characters" }),
   username: z
     .string({ required_error: "username is required" })
@@ -42,6 +43,7 @@ export const updateUserValidation = z.object({
     .max(100, { message: "username should not be longer than 100 characters" }),
   profile_image_url: z
     .string({ required_error: "profile_image_url is required" })
+    .min(1, { message: "profile_image_url cannot be empty" })
     .url({ message: "Enter valid profile_image_url" }),
   age: z
     .number({
@@ -62,5 +64,6 @@ export const loginUserValidation = z.object({
     .max(100, { message: "email should not be longer than 100 characters" }),
   password: z
     .string({ required_error: "password is required" })
+    .min(1, { message: "password cannot be empty" })
     .max(100, { message: "password should not be longer than 100 characters" }),
 });

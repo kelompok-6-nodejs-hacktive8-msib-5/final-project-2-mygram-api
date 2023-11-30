@@ -3,6 +3,7 @@ import { z } from "zod";
 export const photoValidation = z.object({
   poster_image_url: z
     .string({ required_error: "poster_image_url is required" })
+    .min(3, { message: "profile_image_url must be at least 3 characters" })
     .url({ message: "Enter valid poster_image_url" }),
   title: z
     .string({ required_error: "title photo is required" })
