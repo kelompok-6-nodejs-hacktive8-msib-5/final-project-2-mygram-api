@@ -3,7 +3,7 @@ import { web } from "../../index.js";
 import {
   removeTestUserLogin,
   createTestUserLogin,
-} from "../test-util/test-util.js";
+} from "../../utils/user-util.js";
 
 describe("POST /users/login", () => {
   beforeAll(async () => {

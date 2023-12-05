@@ -3,7 +3,7 @@ import { web } from "../../index.js";
 import {
   createTestUserUpdate,
   removeTestUserUpdate,
-} from "../test-util/test-util.js";
+} from "../../utils/user-util.js";
 
 describe("PUT /users/", () => {
   let token;

@@ -4,7 +4,7 @@ import {
   createUserPhotoCreate,
   removePhotoCreate,
   removeTestUserPhotoCreate,
-} from "../test-util/test-util.js";
+} from "../../utils/photo-utils.js";
 
 describe("POST /photos", () => {
   let token;

@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
-import { createTestUserRemove } from "../test-util/test-util.js";
+import { createTestUserRemove } from "../../utils/user-util.js";
 
 describe("DELETE /users/", () => {
   let token;

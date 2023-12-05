@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
-import { removeTestUser } from "../test-util/test-util.js";
+import { removeTestUser } from "../../utils/user-util.js";
 
 describe("POST /users/register", () => {
   afterAll(async () => {
