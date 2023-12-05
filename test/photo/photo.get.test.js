@@ -2,6 +2,7 @@ import supertest from "supertest";
 import { web } from "../../index.js";
 import {
   createUserPhotoGet,
+  removePhotoGet,
   removeTestUserPhotoGet,
 } from "../../utils/photo-utils.js";
 
@@ -31,6 +32,7 @@ describe("GET /photos", () => {
 
   afterAll(async () => {
     await removeTestUserPhotoGet();
+    await removePhotoGet();
   });
 
   it("should unauthorized", async () => {

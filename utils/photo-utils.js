@@ -51,3 +51,11 @@ export const removePhotoCreate = async () => {
     },
   });
 };
+
+export const removePhotoGet = async () => {
+  await photoModel.destroy({
+    where: {
+      title: "jhon 2 image",
+    },
+  });
+};
