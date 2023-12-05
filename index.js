@@ -22,4 +22,4 @@ web.use(errorMiddleware);
 //   console.log(`Server listening on port ${port}`);
 // });
 
-console.log("migration success");
+console.log("migration execute");

@@ -1,19 +1,22 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
-import { removeTestUser, createTestUser } from "../test-utils/test-util.js";
+import {
+  removeTestUserLogin,
+  createTestUserLogin,
+} from "../test-util/test-util.js";
 
-describe("POST /users/register", () => {
+describe("POST /users/login", () => {
   beforeAll(async () => {
-    await createTestUser();
+    await createTestUserLogin();
   });
 
   afterAll(async () => {
-    await removeTestUser();
+    await removeTestUserLogin();
   });
 
   it("should email not valid", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "rohendmailcom",
+      email: "usermailcom",
       password: "tes123123",
     });
 
@@ -24,7 +27,7 @@ describe("POST /users/register", () => {
 
   it("should password cannot empty", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "rohendo@gmail.com",
+      email: "userlogin@gmail.com",
       password: "",
     });
 
@@ -35,7 +38,7 @@ describe("POST /users/register", () => {
 
   it("should wrong email", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "rohendo2@gmail.com",
+      email: "userlog@gmail.com",
       password: "tes123123",
     });
 
@@ -46,8 +49,8 @@ describe("POST /users/register", () => {
 
   it("should wrong password", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "rohendo@gmail.com",
-      password: "tes",
+      email: "userlogin@gmail.com",
+      password: "salah",
     });
 
     expect(result.status).toBe(401);
@@ -57,7 +60,7 @@ describe("POST /users/register", () => {
 
   it("should success login", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "rohendo@gmail.com",
+      email: "userlogin@gmail.com",
       password: "tes123123",
     });
 
