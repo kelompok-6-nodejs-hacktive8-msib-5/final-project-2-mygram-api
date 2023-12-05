@@ -1,9 +1,6 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
-import {
-  createTestUserRemove,
-  removeTestUserRemove,
-} from "../test-util/test-util.js";
+import { createTestUserRemove } from "../test-util/test-util.js";
 
 describe("DELETE /users/", () => {
   let token;
@@ -19,7 +16,7 @@ describe("DELETE /users/", () => {
     token = result.body.token;
   });
 
-  it("should have header token", async () => {
+  it("should unauthorized", async () => {
     const result = await supertest(web).delete("/users/10");
 
     expect(result.status).toBe(401);
@@ -38,7 +35,9 @@ describe("DELETE /users/", () => {
   });
 
   it("should success delete", async () => {
-    const result = await supertest(web).delete("/users/2").set("token", token);
+    const result = await supertest(web)
+      .delete("/users/999999999")
+      .set("token", token);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("message");
@@ -48,7 +47,9 @@ describe("DELETE /users/", () => {
   });
 
   it("should failed delete because recently deleted which is user not found", async () => {
-    const result = await supertest(web).delete("/users/2").set("token", token);
+    const result = await supertest(web)
+      .delete("/users/999999999")
+      .set("token", token);
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("error");

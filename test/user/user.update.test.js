@@ -23,7 +23,7 @@ describe("PUT /users/", () => {
     await removeTestUserUpdate();
   });
 
-  it("should have header token", async () => {
+  it("should unauthorized", async () => {
     const result = await supertest(web).put("/users/2").send({
       email: "userupdate@gmailcom",
       full_name: "user update",
@@ -71,7 +71,7 @@ describe("PUT /users/", () => {
     expect(result.body.error).toBe("email not valid");
   });
 
-  it("should full_name required", async () => {
+  it("should full_name cannot be empty", async () => {
     const result = await supertest(web)
       .put("/users/1")
       .set("token", token)
@@ -89,7 +89,7 @@ describe("PUT /users/", () => {
     expect(result.body.error).toBe("full name must be at least 3 characters");
   });
 
-  it("should username required", async () => {
+  it("should username cannot be empty", async () => {
     const result = await supertest(web)
       .put("/users/1")
       .set("token", token)
@@ -163,7 +163,7 @@ describe("PUT /users/", () => {
 
   it("should success edit user", async () => {
     const result = await supertest(web)
-      .put("/users/1")
+      .put("/users/999999998")
       .set("token", token)
       .send({
         email: "userupdate@gmail.com",

@@ -23,7 +23,7 @@ describe("POST /users/register", () => {
     expect(result.body.error).toBe("email not valid");
   });
 
-  it("should full_name required", async () => {
+  it("should full_name cannot be empty", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendo@gmail.com",
       full_name: "",
@@ -39,7 +39,7 @@ describe("POST /users/register", () => {
     expect(result.body.error).toBe("full name must be at least 3 characters");
   });
 
-  it("should username required", async () => {
+  it("should username cannot be empty", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendo@gmail.com",
       full_name: "rohendo j",
@@ -71,7 +71,7 @@ describe("POST /users/register", () => {
     expect(result.body.error).toBe("password at least 6 character long");
   });
 
-  it("should profile image url required", async () => {
+  it("should profile image url cannot be empty", async () => {
     const result = await supertest(web).post("/users/register").send({
       email: "rohendo@gmail.com",
       full_name: "rohendo j",

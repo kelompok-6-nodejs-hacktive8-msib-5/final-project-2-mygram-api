@@ -1,4 +1,7 @@
-import { user as userModel } from "../../model/sequelize-model.js";
+import {
+  user as userModel,
+  photo as photoModel,
+} from "../../model/sequelize-model.js";
 import bcrypt from "bcrypt";
 
 export const removeTestUser = async () => {
@@ -23,7 +26,7 @@ export const createTestUserLogin = async () => {
 
 export const createTestUserUpdate = async () => {
   await userModel.create({
-    id: 1,
+    id: 999999998,
     email: "userupdate@gmail.com",
     full_name: "user for update",
     username: "userforupdate",
@@ -36,7 +39,7 @@ export const createTestUserUpdate = async () => {
 
 export const createTestUserRemove = async () => {
   await userModel.create({
-    id: 2,
+    id: 999999999,
     email: "userremove@gmail.com",
     full_name: "user for remove",
     username: "userforremove",
@@ -44,6 +47,18 @@ export const createTestUserRemove = async () => {
     profile_image_url: "https://example.com/default-profile-image.jpg",
     age: 20,
     phone_number: 6281568218157,
+  });
+};
+
+export const createUserPhotoCreate = async () => {
+  await userModel.create({
+    email: "jhon@gmail.com",
+    full_name: "jhon",
+    username: "jhon",
+    password: await bcrypt.hash("tes123123", 10),
+    profile_image_url: "https://example.com/default-profile-image.jpg",
+    age: 20,
+    phone_number: 6281568218158,
   });
 };
 
@@ -59,6 +74,22 @@ export const removeTestUserUpdate = async () => {
   await userModel.destroy({
     where: {
       email: "userupdate@gmail.com",
+    },
+  });
+};
+
+export const removeTestUserPhotoCreate = async () => {
+  await userModel.destroy({
+    where: {
+      email: "jhon@gmail.com",
+    },
+  });
+};
+
+export const removePhotoCreate = async () => {
+  await photoModel.destroy({
+    where: {
+      title: "image 1",
     },
   });
 };

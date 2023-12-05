@@ -7,8 +7,10 @@ export const photoValidation = z.object({
     .url({ message: "Enter valid poster_image_url" }),
   title: z
     .string({ required_error: "title photo is required" })
+    .min(1, { message: "title cannot be empty" })
     .max(100, { message: "title should not be longer than 100 characters" }),
   caption: z
     .string({ required_error: "caption is required" })
+    .min(1, { message: "caption cannot be empty" })
     .max(100, { message: "caption should not be longer than 100 characters" }),
 });
