@@ -36,7 +36,9 @@ describe("POST /comments", () => {
     });
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 
@@ -50,7 +52,9 @@ describe("POST /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("comment cannot be empty");
   });
 
@@ -64,7 +68,9 @@ describe("POST /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("PhotoId cannot be empty");
   });
 
@@ -78,7 +84,9 @@ describe("POST /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Photo not found");
   });
 

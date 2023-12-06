@@ -35,7 +35,9 @@ describe("GET /comments", () => {
     const result = await supertest(web).get("/comments");
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 

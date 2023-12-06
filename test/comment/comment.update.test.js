@@ -35,7 +35,9 @@ describe("PUT /comments", () => {
     const result = await supertest(web).put("/comments");
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 
@@ -43,7 +45,9 @@ describe("PUT /comments", () => {
     const result = await supertest(web).put("/comments").set("token", token);
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Enter comment Id in param");
   });
 
@@ -56,7 +60,9 @@ describe("PUT /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Comment not found");
   });
 
@@ -69,7 +75,9 @@ describe("PUT /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("comment cannot be empty");
   });
 

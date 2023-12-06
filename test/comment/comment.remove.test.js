@@ -33,7 +33,9 @@ describe("DELETE /comments", () => {
     const result = await supertest(web).delete("/comments");
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 
@@ -41,7 +43,9 @@ describe("DELETE /comments", () => {
     const result = await supertest(web).delete("/comments").set("token", token);
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Enter comment Id in param");
   });
 
@@ -51,7 +55,9 @@ describe("DELETE /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Comment not found");
   });
 
@@ -61,7 +67,9 @@ describe("DELETE /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(200);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe(
       "Your comment has been successfully deleted"
     );
@@ -73,7 +81,9 @@ describe("DELETE /comments", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Comment not found");
   });
 });
