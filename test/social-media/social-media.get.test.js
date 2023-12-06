@@ -6,7 +6,7 @@ import {
 } from "../../utils/user-util.js";
 import { removeSocialMedia } from "../../utils/social-media-utils.js";
 
-describe("GET /photos", () => {
+describe("GET /socialmedias", () => {
   let token;
 
   beforeAll(async () => {
