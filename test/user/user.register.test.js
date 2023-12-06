@@ -19,7 +19,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("email not valid");
   });
 
@@ -35,7 +37,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("full name must be at least 3 characters");
   });
 
@@ -51,7 +55,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("username at least 1 character long");
   });
 
@@ -67,7 +73,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("password at least 6 character long");
   });
 
@@ -83,7 +91,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe(
       "profile_image_url at least 1 character long"
     );
@@ -101,7 +111,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Enter valid profile_image_url");
   });
 
@@ -117,7 +129,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("age must be number");
   });
 
@@ -133,7 +147,9 @@ describe("POST /users/register", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("phone_number must be number");
   });
 

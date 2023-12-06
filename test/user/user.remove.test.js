@@ -20,7 +20,9 @@ describe("DELETE /users/", () => {
     const result = await supertest(web).delete("/users/10");
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 
@@ -28,7 +30,9 @@ describe("DELETE /users/", () => {
     const result = await supertest(web).delete("/users/10").set("token", token);
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe(
       "You do not have permission to update this user"
     );
@@ -40,7 +44,9 @@ describe("DELETE /users/", () => {
       .set("token", token);
 
     expect(result.status).toBe(200);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe(
       "Your account has been successfully deleted"
     );
@@ -52,7 +58,9 @@ describe("DELETE /users/", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("User not found");
   });
 });

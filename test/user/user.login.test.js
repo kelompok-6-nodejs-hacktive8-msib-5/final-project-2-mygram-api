@@ -21,7 +21,9 @@ describe("POST /users/login", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("email not valid");
   });
 
@@ -32,7 +34,9 @@ describe("POST /users/login", () => {
     });
 
     expect(result.status).toBe(400);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("password cannot be empty");
   });
 
@@ -43,7 +47,9 @@ describe("POST /users/login", () => {
     });
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Email or password wrong");
   });
 
@@ -54,7 +60,9 @@ describe("POST /users/login", () => {
     });
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Email or password wrong");
   });
 
@@ -65,7 +73,9 @@ describe("POST /users/login", () => {
     });
 
     expect(result.status).toBe(200);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("token");
     expect(result.body.token).toBeDefined();
+    expect(result.body.token).toBeTruthy();
   });
 });
