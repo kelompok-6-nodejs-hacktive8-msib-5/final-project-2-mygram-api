@@ -3,46 +3,46 @@ import bcrypt from "bcrypt";
 
 export const createTestUserLogin = async () => {
   await userModel.create({
-    email: "userlogin@gmail.com",
-    full_name: "user for login",
-    username: "userforlogin",
+    email: "user2@gmail.com",
+    full_name: "user",
+    username: "user2",
     password: await bcrypt.hash("tes123123", 10),
     profile_image_url: "https://example.com/default-profile-image.jpg",
     age: 20,
-    phone_number: 6281568218155,
+    phone_number: "628500000001",
   });
 };
 
 export const createTestUserUpdate = async () => {
   await userModel.create({
-    id: 999999998,
-    email: "userupdate@gmail.com",
-    full_name: "user for update",
-    username: "userforupdate",
+    id: 1,
+    email: "user3@gmail.com",
+    full_name: "user",
+    username: "user3",
     password: await bcrypt.hash("tes123123", 10),
     profile_image_url: "https://example.com/default-profile-image.jpg",
     age: 20,
-    phone_number: 6281568218156,
+    phone_number: "628500000001",
   });
 };
 
 export const createTestUserRemove = async () => {
   await userModel.create({
-    id: 999999999,
-    email: "userremove@gmail.com",
-    full_name: "user for remove",
-    username: "userforremove",
+    id: 2,
+    email: "user4@gmail.com",
+    full_name: "user",
+    username: "user4",
     password: await bcrypt.hash("tes123123", 10),
     profile_image_url: "https://example.com/default-profile-image.jpg",
     age: 20,
-    phone_number: 6281568218157,
+    phone_number: "628500000001",
   });
 };
 
 export const removeTestUser = async () => {
   await userModel.destroy({
     where: {
-      email: "rohendo@gmail.com",
+      email: "user@gmail.com",
     },
   });
 };
@@ -50,7 +50,7 @@ export const removeTestUser = async () => {
 export const removeTestUserLogin = async () => {
   await userModel.destroy({
     where: {
-      email: "userlogin@gmail.com",
+      email: "user2@gmail.com",
     },
   });
 };
@@ -58,7 +58,7 @@ export const removeTestUserLogin = async () => {
 export const removeTestUserUpdate = async () => {
   await userModel.destroy({
     where: {
-      email: "userupdate@gmail.com",
+      email: "user3@gmail.com",
     },
   });
 };

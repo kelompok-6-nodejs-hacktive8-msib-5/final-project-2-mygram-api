@@ -12,7 +12,7 @@ describe("PUT /users/", () => {
     await createTestUserUpdate();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "userupdate@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -179,25 +179,25 @@ describe("PUT /users/", () => {
 
   it("should success edit user", async () => {
     const result = await supertest(web)
-      .put("/users/999999998")
+      .put("/users/1")
       .set("token", token)
       .send({
-        email: "userupdate@gmail.com",
-        full_name: "userupdateedit",
-        username: "userupdate",
+        email: "user3@gmail.com",
+        full_name: "user",
+        username: "user3",
         profile_image_url: "https://example.com/default-profile-image.jpg",
         age: 20,
-        phone_number: 6281568218156,
+        phone_number: 628500000001,
       });
 
     expect(result.status).toBe(200);
-    expect(result.body.user.email).toBe("userupdate@gmail.com");
-    expect(result.body.user.full_name).toBe("userupdateedit");
-    expect(result.body.user.username).toBe("userupdate");
+    expect(result.body.user.email).toBe("user3@gmail.com");
+    expect(result.body.user.full_name).toBe("user");
+    expect(result.body.user.username).toBe("user3");
     expect(result.body.user.profile_image_url).toBe(
       "https://example.com/default-profile-image.jpg"
     );
     expect(result.body.user.age).toBe(20);
-    expect(result.body.user.phone_number).toBe(6281568218156);
+    expect(result.body.user.phone_number).toBe(628500000001);
   });
 });

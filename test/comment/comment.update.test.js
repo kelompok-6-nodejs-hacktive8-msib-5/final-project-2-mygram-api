@@ -1,24 +1,22 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { createComment, removeComment } from "../../utils/comment-utils.js";
 import {
-  createCommentUpdate,
-  createPhotoForCommentUpdate,
-  createUserCommentUpdate,
-  removeCommentUpdate,
-  removePhotoForCommentUpdate,
-  removeUserCommentUpdate,
-} from "../../utils/comment-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
+import { createPhoto, removePhoto } from "../../utils/photo-utils.js";
 
 describe("PUT /comments", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserCommentUpdate();
-    await createPhotoForCommentUpdate();
-    await createCommentUpdate();
+    await createTestUserUpdate();
+    await createPhoto();
+    await createComment();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon7@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -26,9 +24,9 @@ describe("PUT /comments", () => {
   });
 
   afterAll(async () => {
-    await removeUserCommentUpdate();
-    await removePhotoForCommentUpdate();
-    await removeCommentUpdate();
+    await removeTestUserUpdate();
+    await removePhoto();
+    await removeComment();
   });
 
   it("should unauthorized", async () => {
@@ -55,7 +53,7 @@ describe("PUT /comments", () => {
     const result = await supertest(web)
       .put("/comments/123123")
       .send({
-        comment: "comment from jhon 7",
+        comment: "comment from user3",
       })
       .set("token", token);
 
@@ -68,7 +66,7 @@ describe("PUT /comments", () => {
 
   it("should comment cannot be empty", async () => {
     const result = await supertest(web)
-      .put("/comments/123123")
+      .put("/comments/1")
       .send({
         comment: "",
       })
@@ -83,16 +81,16 @@ describe("PUT /comments", () => {
 
   it("should success update comment", async () => {
     const result = await supertest(web)
-      .put("/comments/999999999")
+      .put("/comments/1")
       .send({
-        comment: "comment from jhon 7",
+        comment: "comment from user3",
       })
       .set("token", token);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("comment");
     expect(result.body.comment.id).toBeDefined();
-    expect(result.body.comment.comment).toBe("comment from jhon 7");
+    expect(result.body.comment.comment).toBe("comment from user3");
     expect(result.body.comment.createdAt).toBeDefined();
     expect(result.body.comment.updatedAt).toBeDefined();
     expect(result.body.comment.UserId).toBeDefined();

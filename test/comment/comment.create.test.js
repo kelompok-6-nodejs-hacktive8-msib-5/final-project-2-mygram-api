@@ -1,22 +1,21 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { removeComment } from "../../utils/comment-utils.js";
 import {
-  createUserCommentCreate,
-  createPhotoForCommentCreate,
-  removeUserCommentCreate,
-  removePhotoForCommentCreate,
-  removeCommentCreate,
-} from "../../utils/comment-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
+import { createPhoto, removePhoto } from "../../utils/photo-utils.js";
 
 describe("POST /comments", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserCommentCreate();
-    await createPhotoForCommentCreate();
+    await createTestUserUpdate();
+    await createPhoto();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon5@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -24,15 +23,15 @@ describe("POST /comments", () => {
   });
 
   afterAll(async () => {
-    await removeUserCommentCreate();
-    await removePhotoForCommentCreate();
-    await removeCommentCreate();
+    await removeTestUserUpdate();
+    await removePhoto();
+    await removeComment();
   });
 
   it("should unauthorized", async () => {
     const result = await supertest(web).post("/comments").send({
-      comment: "comment from jhon 5",
-      PhotoId: "999999993",
+      comment: "comment from user3",
+      PhotoId: "1",
     });
 
     expect(result.status).toBe(401);
@@ -47,7 +46,7 @@ describe("POST /comments", () => {
       .post("/comments")
       .send({
         comment: "",
-        PhotoId: "999999993",
+        PhotoId: "1",
       })
       .set("token", token);
 
@@ -62,7 +61,7 @@ describe("POST /comments", () => {
     const result = await supertest(web)
       .post("/comments")
       .send({
-        comment: "comment form jhon 5",
+        comment: "comment form user3",
         PhotoId: "",
       })
       .set("token", token);
@@ -94,17 +93,17 @@ describe("POST /comments", () => {
     const result = await supertest(web)
       .post("/comments")
       .send({
-        comment: "comment from jhon 5",
-        PhotoId: "999999993",
+        comment: "comment from user3",
+        PhotoId: "1",
       })
       .set("token", token);
 
     expect(result.status).toBe(201);
     expect(result.body).toHaveProperty("comment");
     expect(result.body.comment.id).toBeDefined();
-    expect(result.body.comment.comment).toBe("comment from jhon 5");
+    expect(result.body.comment.comment).toBe("comment from user3");
     expect(result.body.comment.UserId).toBeDefined();
-    expect(result.body.comment.PhotoId).toBe(999999993);
+    expect(result.body.comment.PhotoId).toBe(1);
     expect(result.body.comment.createdAt).toBeDefined();
     expect(result.body.comment.updatedAt).toBeDefined();
   });

@@ -1,19 +1,19 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { removePhoto } from "../../utils/photo-utils.js";
 import {
-  createUserPhotoGet,
-  removePhotoGet,
-  removeTestUserPhotoGet,
-} from "../../utils/photo-utils.js";
+  createTestUserLogin,
+  removeTestUserLogin,
+} from "../../utils/user-util.js";
 
 describe("GET /photos", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserPhotoGet();
+    await createTestUserLogin();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon2@gmail.com",
+      email: "user2@gmail.com",
       password: "tes123123",
     });
 
@@ -24,15 +24,15 @@ describe("GET /photos", () => {
       .send({
         poster_image_url:
           "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        title: "jhon 2 image",
-        caption: "jhon 2 caption",
+        title: "image 1",
+        caption: "image 1 caption",
       })
       .set("token", token);
   });
 
   afterAll(async () => {
-    await removeTestUserPhotoGet();
-    await removePhotoGet();
+    await removeTestUserLogin();
+    await removePhoto();
   });
 
   it("should unauthorized", async () => {
@@ -50,8 +50,8 @@ describe("GET /photos", () => {
 
     expect(result.status).toBe(200);
     expect(result.body.photos[0].id).toBeDefined();
-    expect(result.body.photos[0].title).toBe("jhon 2 image");
-    expect(result.body.photos[0].caption).toBe("jhon 2 caption");
+    expect(result.body.photos[0].title).toBe("image 1");
+    expect(result.body.photos[0].caption).toBe("image 1 caption");
     expect(result.body.photos[0].poster_image_url).toBe(
       "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     );

@@ -9,7 +9,7 @@ describe("DELETE /users/", () => {
     await createTestUserRemove();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "userremove@gmail.com",
+      email: "user4@gmail.com",
       password: "tes123123",
     });
 
@@ -39,9 +39,7 @@ describe("DELETE /users/", () => {
   });
 
   it("should success delete", async () => {
-    const result = await supertest(web)
-      .delete("/users/999999999")
-      .set("token", token);
+    const result = await supertest(web).delete("/users/2").set("token", token);
 
     expect(result.status).toBe(200);
     expect(result.body).toBeDefined();
@@ -53,9 +51,7 @@ describe("DELETE /users/", () => {
   });
 
   it("should failed delete because recently deleted which is user not found", async () => {
-    const result = await supertest(web)
-      .delete("/users/999999999")
-      .set("token", token);
+    const result = await supertest(web).delete("/users/2").set("token", token);
 
     expect(result.status).toBe(404);
     expect(result.body).toBeDefined();

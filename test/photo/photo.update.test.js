@@ -1,21 +1,20 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { createPhoto, removePhoto } from "../../utils/photo-utils.js";
 import {
-  createPhotoUpdate,
-  createUserPhotoUpdate,
-  removePhotoUpdate,
-  removeTestUserPhotoUpdate,
-} from "../../utils/photo-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
 
 describe("PUT /photos", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserPhotoUpdate();
-    await createPhotoUpdate();
+    await createTestUserUpdate();
+    await createPhoto();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon3@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -23,8 +22,8 @@ describe("PUT /photos", () => {
   });
 
   afterAll(async () => {
-    await removeTestUserPhotoUpdate();
-    await removePhotoUpdate();
+    await removeTestUserUpdate();
+    await removePhoto();
   });
 
   it("should unauthorized", async () => {
@@ -39,7 +38,7 @@ describe("PUT /photos", () => {
 
   it("should poster image url cannot be empty", async () => {
     const result = await supertest(web)
-      .put("/photos/999999991")
+      .put("/photos/1")
       .send({
         poster_image_url: "",
         title: "sky3",
@@ -58,7 +57,7 @@ describe("PUT /photos", () => {
 
   it("should poster image url valid", async () => {
     const result = await supertest(web)
-      .put("/photos/999999991")
+      .put("/photos/1")
       .send({
         poster_image_url: "httpphotocom",
         title: "sky3",
@@ -75,7 +74,7 @@ describe("PUT /photos", () => {
 
   it("should title cannot be empty", async () => {
     const result = await supertest(web)
-      .put("/photos/999999991")
+      .put("/photos/1")
       .send({
         poster_image_url:
           "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -93,7 +92,7 @@ describe("PUT /photos", () => {
 
   it("should caption cannot be empty", async () => {
     const result = await supertest(web)
-      .put("/photos/999999991")
+      .put("/photos/1")
       .send({
         poster_image_url:
           "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -111,7 +110,7 @@ describe("PUT /photos", () => {
 
   it("should photo not found", async () => {
     const result = await supertest(web)
-      .put("/photos/100000000")
+      .put("/photos/0")
       .send({
         poster_image_url:
           "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -129,20 +128,20 @@ describe("PUT /photos", () => {
 
   it("should success update photo", async () => {
     const result = await supertest(web)
-      .put("/photos/999999991")
+      .put("/photos/1")
       .send({
         poster_image_url:
           "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        title: "jhon 3 image",
-        caption: "jhon 3 caption",
+        title: "image 1",
+        caption: "image 1 caption",
       })
       .set("token", token);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("photo");
     expect(result.body.photo.id).toBeDefined();
-    expect(result.body.photo.title).toBe("jhon 3 image");
-    expect(result.body.photo.caption).toBe("jhon 3 caption");
+    expect(result.body.photo.title).toBe("image 1");
+    expect(result.body.photo.caption).toBe("image 1 caption");
     expect(result.body.photo.poster_image_url).toBe(
       "https://images.unsplash.com/photo-1698180687511-bd6c0104ee98?auto=format&fit=crop&q=80&w=1397&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     );

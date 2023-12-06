@@ -1,18 +1,18 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
 import {
-  createUserSocialMediaCreate,
-  removeUserSocialMediaCreate,
-} from "../../utils/social-media-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
 
 describe("POST /socialmedias", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserSocialMediaCreate();
+    await createTestUserUpdate();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon9@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -20,13 +20,13 @@ describe("POST /socialmedias", () => {
   });
 
   afterAll(async () => {
-    await removeUserSocialMediaCreate();
+    await removeTestUserUpdate();
   });
 
   it("should unauthorized", async () => {
     const result = await supertest(web).post("/socialmedias").send({
-      name: "jhon9sm",
-      social_media_url: "https://www.instagram.com/jhon9",
+      name: "user 3 social media",
+      social_media_url: "https://www.instagram.com/user3",
     });
 
     expect(result.status).toBe(401);
@@ -41,7 +41,7 @@ describe("POST /socialmedias", () => {
       .post("/socialmedias")
       .send({
         name: "",
-        social_media_url: "https://www.instagram.com/jhon9",
+        social_media_url: "https://www.instagram.com/user3",
       })
       .set("token", token);
 

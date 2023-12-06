@@ -1,20 +1,20 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { createPhoto } from "../../utils/photo-utils.js";
 import {
-  createPhotoRemove,
-  createUserPhotoRemove,
-  removeTestUserPhotoRemove,
-} from "../../utils/photo-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
 
 describe("DELETE /photos", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserPhotoRemove();
-    await createPhotoRemove();
+    await createTestUserUpdate();
+    await createPhoto();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon4@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -22,7 +22,7 @@ describe("DELETE /photos", () => {
   });
 
   afterAll(async () => {
-    await removeTestUserPhotoRemove();
+    await removeTestUserUpdate();
   });
 
   it("should unauthorized", async () => {
@@ -36,9 +36,7 @@ describe("DELETE /photos", () => {
   });
 
   it("should photo not found", async () => {
-    const result = await supertest(web)
-      .delete("/photos/1000000000")
-      .set("token", token);
+    const result = await supertest(web).delete("/photos/0").set("token", token);
 
     expect(result.status).toBe(404);
     expect(result.body).toBeDefined();
@@ -48,9 +46,7 @@ describe("DELETE /photos", () => {
   });
 
   it("should success remove photo", async () => {
-    const result = await supertest(web)
-      .delete("/photos/999999992")
-      .set("token", token);
+    const result = await supertest(web).delete("/photos/1").set("token", token);
 
     expect(result.status).toBe(200);
     expect(result.body).toBeDefined();
@@ -62,9 +58,7 @@ describe("DELETE /photos", () => {
   });
 
   it("should failed delete because recently deleted which is photo not found", async () => {
-    const result = await supertest(web)
-      .delete("/photos/999999992")
-      .set("token", token);
+    const result = await supertest(web).delete("/photos/1").set("token", token);
 
     expect(result.status).toBe(404);
     expect(result.body).toBeDefined();

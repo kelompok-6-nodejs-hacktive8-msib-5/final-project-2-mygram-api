@@ -1,19 +1,19 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { removePhoto } from "../../utils/photo-utils.js";
 import {
-  createUserPhotoCreate,
-  removePhotoCreate,
-  removeTestUserPhotoCreate,
-} from "../../utils/photo-utils.js";
+  createTestUserLogin,
+  removeTestUserLogin,
+} from "../../utils/user-util.js";
 
 describe("POST /photos", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserPhotoCreate();
+    await createTestUserLogin();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon@gmail.com",
+      email: "user2@gmail.com",
       password: "tes123123",
     });
 
@@ -21,8 +21,8 @@ describe("POST /photos", () => {
   });
 
   afterAll(async () => {
-    await removeTestUserPhotoCreate();
-    await removePhotoCreate();
+    await removeTestUserLogin();
+    await removePhoto();
   });
 
   it("should unauthorized", async () => {

@@ -68,7 +68,7 @@ describe("POST /users/login", () => {
 
   it("should success login", async () => {
     const result = await supertest(web).post("/users/login").send({
-      email: "userlogin@gmail.com",
+      email: "user2@gmail.com",
       password: "tes123123",
     });
 

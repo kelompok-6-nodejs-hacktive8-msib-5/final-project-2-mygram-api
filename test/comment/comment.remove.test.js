@@ -1,23 +1,22 @@
 import supertest from "supertest";
 import { web } from "../../index.js";
+import { createComment } from "../../utils/comment-utils.js";
 import {
-  createCommentRemove,
-  createPhotoForCommentRemove,
-  createUserCommentRemove,
-  removePhotoForCommentRemove,
-  removeUserCommentRemove,
-} from "../../utils/comment-utils.js";
+  createTestUserUpdate,
+  removeTestUserUpdate,
+} from "../../utils/user-util.js";
+import { createPhoto, removePhoto } from "../../utils/photo-utils.js";
 
 describe("DELETE /comments", () => {
   let token;
 
   beforeAll(async () => {
-    await createUserCommentRemove();
-    await createPhotoForCommentRemove();
-    await createCommentRemove();
+    await createTestUserUpdate();
+    await createPhoto();
+    await createComment();
 
     const result = await supertest(web).post("/users/login").send({
-      email: "jhon8@gmail.com",
+      email: "user3@gmail.com",
       password: "tes123123",
     });
 
@@ -25,8 +24,8 @@ describe("DELETE /comments", () => {
   });
 
   afterAll(async () => {
-    await removeUserCommentRemove();
-    await removePhotoForCommentRemove();
+    await removeTestUserUpdate();
+    await removePhoto();
   });
 
   it("should unauthorized", async () => {
@@ -63,7 +62,7 @@ describe("DELETE /comments", () => {
 
   it("should success remove comment", async () => {
     const result = await supertest(web)
-      .delete("/comments/999999998")
+      .delete("/comments/1")
       .set("token", token);
 
     expect(result.status).toBe(200);
@@ -77,7 +76,7 @@ describe("DELETE /comments", () => {
 
   it("should failed delete because recently deleted which is comment not found", async () => {
     const result = await supertest(web)
-      .delete("/comments/999999998")
+      .delete("/comments/1")
       .set("token", token);
 
     expect(result.status).toBe(404);

@@ -155,34 +155,34 @@ describe("POST /users/register", () => {
 
   it("should success register", async () => {
     const result = await supertest(web).post("/users/register").send({
-      email: "rohendo@gmail.com",
-      full_name: "Rohendo Junaedin",
-      username: "rohendo",
+      email: "user@gmail.com",
+      full_name: "user",
+      username: "user",
       password: "tes123123",
       profile_image_url: "https://example.com/default-profile-image.jpg",
       age: 20,
-      phone_number: 6281568218155,
+      phone_number: 628500000001,
     });
 
     expect(result.status).toBe(201);
-    expect(result.body.User.email).toBe("rohendo@gmail.com");
-    expect(result.body.User.full_name).toBe("Rohendo Junaedin");
+    expect(result.body.User.email).toBe("user@gmail.com");
+    expect(result.body.User.full_name).toBe("user");
     expect(result.body.User.profile_image_url).toBe(
       "https://example.com/default-profile-image.jpg"
     );
     expect(result.body.User.age).toBe(20);
-    expect(result.body.User.phone_number).toBe(6281568218155);
+    expect(result.body.User.phone_number).toBe(628500000001);
   });
 
   it("should email registered", async () => {
     const result = await supertest(web).post("/users/register").send({
-      email: "rohendo@gmail.com",
-      full_name: "Rohendo Junaedin",
-      username: "rohendo",
+      email: "user@gmail.com",
+      full_name: "user",
+      username: "user",
       password: "tes123123",
       profile_image_url: "https://example.com/default-profile-image.jpg",
       age: 20,
-      phone_number: 6281568218155,
+      phone_number: 628500000001,
     });
 
     expect(result.status).toBe(409);
