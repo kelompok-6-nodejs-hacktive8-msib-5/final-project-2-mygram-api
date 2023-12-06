@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { web } from "../index.js";
 
-describe("POST /", () => {
+describe("GET /", () => {
   it("should success", async () => {
     const result = await supertest(web).get("/");
 
