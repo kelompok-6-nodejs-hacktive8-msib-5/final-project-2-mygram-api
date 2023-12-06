@@ -29,7 +29,9 @@ describe("DELETE /photos", () => {
     const result = await supertest(web).delete("/photos");
 
     expect(result.status).toBe(401);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe("Unauthorized");
   });
 
@@ -39,7 +41,9 @@ describe("DELETE /photos", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Photo not found");
   });
 
@@ -49,7 +53,9 @@ describe("DELETE /photos", () => {
       .set("token", token);
 
     expect(result.status).toBe(200);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("message");
+    expect(result.body.message).toBeDefined();
     expect(result.body.message).toBe(
       "Your photo has been successfully deleted"
     );
@@ -61,7 +67,9 @@ describe("DELETE /photos", () => {
       .set("token", token);
 
     expect(result.status).toBe(404);
+    expect(result.body).toBeDefined();
     expect(result.body).toHaveProperty("error");
+    expect(result.body.error).toBeDefined();
     expect(result.body.error).toBe("Photo not found");
   });
 });
