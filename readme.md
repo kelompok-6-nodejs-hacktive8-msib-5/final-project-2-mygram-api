@@ -10,13 +10,19 @@ detail testing
 
 # Cara menjalankan testing di lokal
 
-1. membuat database
+1. install dependensi
+
+```
+npm install
+```
+
+2. membuat database
 
 ```
 create database <database name>
 ```
 
-2. setup `.env`
+3. setup `.env`
 
 ```
 # db url local = postgresql://yourusername:yourpassword@localhost:5432/yourdb
@@ -26,7 +32,7 @@ PORT=
 SECRET_KEY_JWT=
 ```
 
-3. Migrasi database
+4. Migrasi database
 
 eksekusi perintah `node index.js`, sampai terlihat seperti gambar dibawah
 
@@ -36,7 +42,7 @@ lalu batalkan proses di teminal `ctrl + c`
 
 (jika terjadi error migrasi, periksa konfigurasi .env dan nama databasenya)
 
-4. Jalankan testing
+5. Jalankan testing
 
 ```
 npm run test
